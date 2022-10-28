@@ -23,6 +23,6 @@
     height: 100vh;
     background-color: rgba(255, 255, 255, 0.856) ;
     left: 0;
-    z-index: 999;
+    z-index: 2;
 }
 </style>
