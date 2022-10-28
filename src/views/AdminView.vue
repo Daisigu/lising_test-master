@@ -15,23 +15,25 @@
                         <form class="addcar-form d-flex flex-column">
                             <div class="mb-3">
                                 <label for="mark" class="form-label">Марка </label>
-                                <input autocomplete="off" v-model="mark" type="email" class="form-control"
-                                    id="mark" aria-describedby="emailHelp">
+                                <input autocomplete="off" v-model="mark" type="text" class="form-control" id="mark"
+                                    aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3">
                                 <label for="engine" class="form-label">Обьем двигателя</label>
-                                <input autocomplete="off" v-model="engine" type="text" class="form-control"
-                                    id="engine">
+                                <input autocomplete="off" v-model="engine" type="text" class="form-control" id="engine">
                             </div>
                             <div class="mb-3">
                                 <label for="model" class="form-label">Модель</label>
-                                <input autocomplete="off" v-model="model" type="text" class="form-control"
-                                    id="model">
+                                <input autocomplete="off" v-model="model" type="text" class="form-control" id="model">
                             </div>
                             <div class="mb-3">
                                 <label for="model" class="form-label">Фотография</label>
-                                <input autocomplete="off" ref="carPhoto" type="file" class="form-control"
-                                    id="model">
+                                <input autocomplete="off" ref="carPhoto" type="file" class="form-control" id="model">
+                            </div>
+                            <div class="mb-3">
+                                <label for="model" class="form-label">Фотография для карусели</label>
+                                <input autocomplete="off" ref="carCaruselPhoto" type="file" multiple="true"
+                                    class="form-control" id="model">
                             </div>
 
 
@@ -40,6 +42,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                         <button type="button" class="btn btn-primary" @click="addCar()">Отправить</button>
+                        <button @click="test()">Test</button>
                     </div>
                 </div>
             </div>
@@ -56,27 +59,40 @@ export default {
             mark: '',
             engine: '',
             model: '',
+            cars: '',
         }
     },
     methods: {
-        addCar(){
+        test() {
+            axios.get('http://localhost:5000/cars/getAll').then((res) => {
+                this.cars = res.data
+            })
+        },
+        addCar() {
             const formData = new FormData();
-            formData.append('mark' , this.mark)
-            formData.append('engine' , this.engine)
-            formData.append('model' , this.model)
-            formData.append('photo' , this.$refs.carPhoto.files[0])
-
-           axios({
-            method: 'post',
-            url: 'http://localhost:5000/test/cars',
-            data: formData
-           }).then((res)=>{
-            console.log(res);
-           })
-        }  
+            formData.append('mark', this.mark)
+            formData.append('engine', this.engine)
+            formData.append('model', this.model)
+            formData.append('photo', this.$refs.carPhoto.files[0])
+            for (let i = 0; i < this.$refs.carCaruselPhoto.files.length; i++) {
+                formData.append("carouselPhotos", this.$refs.carCaruselPhoto.files[i]);
+            }
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/cars/create',
+                data: formData /* {
+                mark: this.mark,
+                engine: this.engine,
+                model: this.model
+            } */
+            }).then((res) => {
+                console.log(res);
+            })
+        }
     },
 }
 </script>
 
 <style scoped>
+
 </style>
