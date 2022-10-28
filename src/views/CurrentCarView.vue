@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-sideback></v-sideback>
     <VSpinner v-if="loading"></VSpinner>
     <div class="container mt-5" v-if="!loading">
         <div class="full-size-car-card d-flex">
@@ -33,6 +34,7 @@ import VCarousel from '@/components/v-carousel.vue';
 import VSpinner from '@/components/v-spinner.vue'
 import VLeasingCalculator from '@/components/v-leasing-calculator.vue';
 import axios from 'axios';
+import VSideback from '@/components/v-sideback.vue';
 
 export default {
     data() {
@@ -69,7 +71,7 @@ export default {
             this.$router.push('/catalog')
         }
     },
-    components: { VCarousel, VLeasingCalculator, VSpinner },
+    components: { VCarousel, VLeasingCalculator, VSpinner, VSideback },
 
 }
 </script>
