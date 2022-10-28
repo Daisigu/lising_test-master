@@ -1,31 +1,70 @@
 <template>
-  <div>
-    <v-sideback></v-sideback>
-    <VSpinner v-if="loading"></VSpinner>
-    <div class="container mt-5" v-if="!loading">
-        <div class="full-size-car-card d-flex">
-            <div class="img-car-wrapper col-5 me-5">
-                <VCarousel></VCarousel>
+    <div>
+        <v-sideback></v-sideback>
+        <VSpinner v-if="loading"></VSpinner>
+        <div class="container mt-5" v-if="!loading">
+            <div class="full-size-car-card d-flex">
+                <div class="img-car-wrapper col-5 me-5">
+                    <VCarousel></VCarousel>
+                </div>
+                <div class="d-flex flex-column">
+                    <h3>
+                        {{ currentCar.mark }} {{ currentCar.model }}
+                    </h3>
+                    <h5>Цена: {{ Number(currentCar.price).toLocaleString('ru-RU') }} | Платеж от:
+                        {{ (Number((Number(currentCar.price) / 12)).toFixed(0)).toLocaleString('ru-RU') }} Руб. / Мес
+                    </h5>
+                    <p>Двигатель: {{ currentCar.engine }} л.</p>
+                    <p>Пробег: {{ currentCar.mileage }} км.</p>
+                    <p>Наличие:
+                        <span v-if="currentCar.availability">В наличии</span>
+                        <span v-else>Нет в наличии</span>
+                    </p>
+                    <button class="btn btn-success align-self-start" data-bs-toggle="modal" :data-bs-target="'#'+bookCarModal">Забронировать</button>
+                </div>
             </div>
-            <div class="d-flex flex-column">
-                <h3>
-                    {{ currentCar.mark }} {{ currentCar.model }}
-                </h3>
-                <h5>Цена: {{ Number(currentCar.price).toLocaleString('ru-RU') }} | Платеж от:
-                    {{ (Number((Number(currentCar.price) / 12)).toFixed(0)).toLocaleString('ru-RU') }} Руб. / Мес</h5>
-                <p>Двигатель: {{ currentCar.engine }} л.</p>
-                <p>Пробег: {{ currentCar.mileage }} км.</p>
-                <p>Наличие:
-                    <span v-if="currentCar.availability">В наличии</span>
-                    <span v-else>Нет в наличии</span>
-                </p>
-                <button class="btn btn-success align-self-start">Забронировать</button>
-            </div>
+            <VLeasingCalculator class="mt-5" :car="currentCar"></VLeasingCalculator>
         </div>
-        <VLeasingCalculator class="mt-5" :car="currentCar"></VLeasingCalculator>
+
+
+
+
+
+
+
+
+
+
+        <!-- Book car  Modal -->
+        <v-modal :header-title-text="'Заявка на бронирование автомобиля'" :target="bookCarModal">
+            <template v-slot:body>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Ваше имя</label>
+                    <input v-model="requestName" type="text" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Номер телефона</label>
+                    <input v-model="requsetPhoneNumber" type="phone" class="form-control" id="exampleInputPassword1">
+                </div>
+            </template>
+            <template v-slot:footer>
+                <button data-bs-close="modal" data-bs-dismiss="modal" class="btn btn-sm btn-primary me-2"
+                  >Отправить</button>
+                <button class="btn btn-sm btn-danger">Закрыть</button>
+            </template>
+        </v-modal>
+
+
+
+
+
+
+
+
+
+
 
     </div>
-  </div>
 </template>
 
 <script>
@@ -35,11 +74,15 @@ import VSpinner from '@/components/v-spinner.vue'
 import VLeasingCalculator from '@/components/v-leasing-calculator.vue';
 import axios from 'axios';
 import VSideback from '@/components/v-sideback.vue';
+import vModal from '@/components/v-modal.vue';
 
 export default {
     data() {
         return {
             loading: false,
+            requestName: '',
+            requsetPhoneNumber: '',
+            bookCarModal: 'bookCarModal'
         }
     },
     computed: {
@@ -71,7 +114,7 @@ export default {
             this.$router.push('/catalog')
         }
     },
-    components: { VCarousel, VLeasingCalculator, VSpinner, VSideback },
+    components: { VCarousel, VLeasingCalculator, VSpinner, VSideback,vModal },
 
 }
 </script>

@@ -9,23 +9,8 @@
             разработанные в Европлане, позволяют приобретать легковые и грузовые автомобили, а также строительную,
             дорожную, сельскохозяйственную и другую спецтехнику.
           </p>
-          <button class="btn btn-danger" @click="requestModal = true">Оставить заявку</button>
-          <v-modal :show="requestModal" :header-title-text="'Заголовок'">
-            <template v-slot:body>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Ваше имя</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Номер телефона</label>
-                <input type="phone" class="form-control" id="exampleInputPassword1">
-              </div>
-            </template>
-            <template v-slot:footer>
-              <button class="btn btn-sm btn-primary me-2">Отправить</button>
-              <button class="btn btn-sm btn-danger" @click="requestModal = false">Закрыть</button>
-            </template>
-          </v-modal>
+          <button class="btn btn-danger" data-bs-toggle="modal" :data-bs-target="'#' + requestModal">Оставить заявку
+          </button>
         </div>
       </div>
       <div class="col-5"></div>
@@ -43,6 +28,44 @@
         </div>
       </div>
     </div>
+
+
+
+
+    <!-- Request Modal -->
+    <v-modal :header-title-text="'Заголовок'" :target="requestModal">
+      <template v-slot:body>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Ваше имя</label>
+          <input v-model="requestName" type="text" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Номер телефона</label>
+          <input v-model="requsetPhoneNumber" type="phone" class="form-control" id="exampleInputPassword1">
+        </div>
+      </template>
+      <template v-slot:footer>
+        <button data-bs-close="modal" data-bs-dismiss="modal" class="btn btn-sm btn-primary me-2"
+          @click=sendClientRequest()>Отправить</button>
+        <button class="btn btn-sm btn-danger">Закрыть</button>
+      </template>
+    </v-modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </div>
 </template>
 
@@ -51,11 +74,19 @@ import vModal from '@/components/v-modal.vue';
 export default {
   data() {
     return {
-      requestModal: false
+      requestModal: 'requestModal',
+      requestName: '',
+      requsetPhoneNumber: '',
     }
   },
   components: {
     vModal
+  },
+  methods: {
+    sendClientRequest() {
+      console.log(this.requestName, this.requsetPhoneNumber);
+      alert('Ваша заявка принята')
+    }
   }
 }
 </script>
