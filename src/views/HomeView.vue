@@ -14,7 +14,7 @@
    </div>
    <div class="container mt-5">
      <div class="cards d-flex flex-wrap justify-content-around">
-      <div class="card  me-2 d-flex flex-column mb-2" v-for="card in 6">
+      <div class="card  me-2 d-flex flex-column mb-2" v-for="card in 6" :key="card">
         <h5 class="card-title p-3">
           Лизинг легковых автомобилей для юридических лиц
         </h5>

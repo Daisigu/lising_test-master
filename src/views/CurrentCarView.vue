@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <VSpinner v-if="loading"></VSpinner>
     <div class="container mt-5" v-if="!loading">
         <div class="full-size-car-card d-flex">
             <div class="img-car-wrapper col-5 me-5">
@@ -22,13 +24,14 @@
         <VLeasingCalculator class="mt-5" :car="currentCar"></VLeasingCalculator>
 
     </div>
+  </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex';
 import VCarousel from '@/components/v-carousel.vue';
-
-import VLeasingCalculator from '../components/v-leasing-calculator.vue';
+import VSpinner from '@/components/v-spinner.vue'
+import VLeasingCalculator from '@/components/v-leasing-calculator.vue';
 import axios from 'axios';
 
 export default {
@@ -66,7 +69,7 @@ export default {
             this.$router.push('/catalog')
         }
     },
-    components: { VCarousel, VLeasingCalculator },
+    components: { VCarousel, VLeasingCalculator, VSpinner },
 
 }
 </script>

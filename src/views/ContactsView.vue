@@ -55,7 +55,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+
+VBar<style lang="scss" scoped>
 .contact-card {
     flex-basis: 24%;
 }
