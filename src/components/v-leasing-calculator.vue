@@ -17,7 +17,7 @@
                                 &nbsp;₽</span>
                         </div>
                         <div class="d-flex flex-row align-self-start mb-3 col-11">
-                            <span>{{car.price}} </span> &nbsp; <input type="range" v-model="carPrice" class="form-range"
+                            <span>{{ car.price }} </span> &nbsp; <input type="range" v-model="carPrice" class="form-range"
                                 id="customRange1" :min="car.price" max="50000000" ref="carPriceInput"> <span
                                 class="text-nowrap"> &nbsp; 50 000 000</span>
                         </div>
@@ -59,14 +59,15 @@
             <div class="col-6">
                 <div class="d-flex flex-row align-items-center justify-content-end">
                     <p class="me-4 align-self-end">Сумма договора лизинга </p>
-                    <h1 class="text-danger">{{leasingSum}} ₽</h1>
+                    <h1 class="text-danger">{{ leasingSum }} ₽</h1>
                 </div>
                 <div class="d-flex flex-row align-items-center justify-content-end">
                     <p class="me-4 align-self-end">Итого затраты на приобретение</p>
-                    <h1 class="text-danger">{{expenses}} ₽</h1>
+                    <h1 class="text-danger">{{ expenses }} ₽</h1>
                 </div>
                 <div class="border">
-                    <h4 class="p-3">Ежемесячный платеж: {{(Number(leasingSum/12).toFixed(0)).toLocaleString('ru-RU')}} ₽</h4>
+                    <h4 class="p-3">Ежемесячный платеж: {{ (Number(leasingSum / 12).toFixed(0)).toLocaleString('ru-RU') }} ₽
+                    </h4>
                 </div>
             </div>
         </div>
@@ -93,8 +94,8 @@ export default {
         leasingSum() {
             return (this.carPrice * 1.2 * (this.month / 12) - this.prepaymentRub).toFixed(0)
         },
-        expenses(){
-            return (this.leasingSum*0.8).toFixed(0)
+        expenses() {
+            return (this.leasingSum * 0.8).toFixed(0)
         }
     },
     mounted() {
@@ -103,7 +104,6 @@ export default {
             this.carPrice = this.car.price
         }, 1)
 
-        this.carPrice = this.car.price
     }
 }
 </script>

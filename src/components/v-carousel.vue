@@ -1,7 +1,7 @@
 <template>
     <carousel :items-to-show="1" :wrapAround='true'>
-      <slide v-for="slide in currentCar.carouselImages"  :key="slide">
-        <img :src="slide" alt="" width="400">
+      <slide v-for="slide in currentCar.carouselPhotos"  :key="slide">
+        <img :src="'http://localhost:5000/'+slide" alt="" width="400">
       </slide>
       <template #addons>
         <navigation />

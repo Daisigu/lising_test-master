@@ -1,19 +1,23 @@
 <template>
-    <div class="container mt-5" v-if="currentCar">
+    <div class="container mt-5" v-if="!loading">
         <div class="full-size-car-card d-flex">
-           <div class="img-car-wrapper col-5 me-5">
-            <VCarousel></VCarousel>
-           </div>
-          <div class="d-flex flex-column">
-            <h3>
-            {{currentCar.title}}
-           </h3>
-           <h5>Цена: {{Number(currentCar.price).toLocaleString('ru-RU')}} | Платеж от: {{(Number((Number(currentCar.price)/12)).toFixed(0)).toLocaleString('ru-RU') }} Руб. / Мес</h5>
-           <p>Двигатель: {{currentCar.engine}}</p>
-           <p>Пробег: {{currentCar.mileage}}</p>
-           <p>Наличие: {{currentCar.availability}}</p>
-           <button class="btn btn-success align-self-start">Забронировать</button>
-          </div>
+            <div class="img-car-wrapper col-5 me-5">
+                <VCarousel></VCarousel>
+            </div>
+            <div class="d-flex flex-column">
+                <h3>
+                    {{ currentCar.mark }} {{ currentCar.model }}
+                </h3>
+                <h5>Цена: {{ Number(currentCar.price).toLocaleString('ru-RU') }} | Платеж от:
+                    {{ (Number((Number(currentCar.price) / 12)).toFixed(0)).toLocaleString('ru-RU') }} Руб. / Мес</h5>
+                <p>Двигатель: {{ currentCar.engine }} л.</p>
+                <p>Пробег: {{ currentCar.mileage }} км.</p>
+                <p>Наличие:
+                    <span v-if="currentCar.availability">В наличии</span>
+                    <span v-else>Нет в наличии</span>
+                </p>
+                <button class="btn btn-success align-self-start">Забронировать</button>
+            </div>
         </div>
         <VLeasingCalculator class="mt-5" :car="currentCar"></VLeasingCalculator>
 
@@ -23,38 +27,53 @@
 <script>
 import { mapMutations, mapState } from 'vuex';
 import VCarousel from '@/components/v-carousel.vue';
-import VLeasingCalculator from '../components/v-leasing-calculator.vue';
 
-    export default {
+import VLeasingCalculator from '../components/v-leasing-calculator.vue';
+import axios from 'axios';
+
+export default {
+    data() {
+        return {
+            loading: false,
+        }
+    },
     computed: {
         ...mapState([
             "currentCar"
         ])
     },
     methods: {
+
         ...mapMutations([
-            'getCurrentCar'
-        ])
-    },
-    mounted(){
-        
-        this.getCurrentCar(this.$route.params.id)
-        if(this.currentCar){
-            console.log(this.currentCar);
+            'setCurrentCar'
+        ]),
+        getCurrentCar(_id) {
+            if (!(this.loading)) {
+                this.loading = true
+                axios.get('http://localhost:5000/cars/car/' + _id).then((res) => {
+                    this.setCurrentCar(res.data)
+                    this.loading = false
+                })
+            }
         }
-        else
-        {
-          this.$router.push('/catalog')
+    },
+    mounted() {
+
+        this.getCurrentCar(this.$route.params.id)
+        if (this.currentCar) {
+        }
+        else {
+            this.$router.push('/catalog')
         }
     },
     components: { VCarousel, VLeasingCalculator },
-   
+
 }
 </script>
 
 <style  scoped>
-    .img-car-wrapper img{
-        width: 100%;
-        height: 100%;
-    }
+.img-car-wrapper img {
+    width: 100%;
+    height: 100%;
+}
 </style>

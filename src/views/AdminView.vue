@@ -23,8 +23,21 @@
                                 <input autocomplete="off" v-model="engine" type="text" class="form-control" id="engine">
                             </div>
                             <div class="mb-3">
+                                <label for="engine" class="form-label">Цена</label>
+                                <input autocomplete="off" v-model="price" type="text" class="form-control" id="engine">
+                            </div>
+                            <div class="mb-3">
+                                <label for="engine" class="form-label">Пробег</label>
+                                <input autocomplete="off" v-model="mileage" type="text" class="form-control"
+                                    id="engine">
+                            </div>
+                            <div class="mb-3">
                                 <label for="model" class="form-label">Модель</label>
                                 <input autocomplete="off" v-model="model" type="text" class="form-control" id="model">
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" v-model="availability" type="checkbox" id="flexSwitchCheckDefault">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Наличие</label>
                             </div>
                             <div class="mb-3">
                                 <label for="model" class="form-label">Фотография</label>
@@ -58,21 +71,23 @@ export default {
         return {
             mark: '',
             engine: '',
+            price: '',
+            mileage: '',
+            availability: false,
             model: '',
-            cars: '',
         }
     },
     methods: {
-        test() {
-            axios.get('http://localhost:5000/cars/getAll').then((res) => {
-                this.cars = res.data
-            })
-        },
+
         addCar() {
             const formData = new FormData();
             formData.append('mark', this.mark)
             formData.append('engine', this.engine)
+            formData.append('price', this.price)
+            formData.append('mileage', this.mileage)
+            formData.append('availability', this.availability)
             formData.append('model', this.model)
+
             formData.append('photo', this.$refs.carPhoto.files[0])
             for (let i = 0; i < this.$refs.carCaruselPhoto.files.length; i++) {
                 formData.append("carouselPhotos", this.$refs.carCaruselPhoto.files[i]);
