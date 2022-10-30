@@ -23,7 +23,8 @@
     left: 0;
     width: 80px;
     height: 100vh;
-    top: 50px;
+    top: 0;
+    z-index: 1;
 }
 .side-back-link:hover{
     background-color: rgba(128, 128, 128, 0.164);

@@ -46,5 +46,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.navbar{
+    z-index: 2;
+}
 </style>

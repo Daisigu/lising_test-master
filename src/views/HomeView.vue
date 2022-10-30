@@ -33,7 +33,7 @@
 
 
     <!-- Request Modal -->
-    <v-modal :header-title-text="'Заголовок'" :target="requestModal">
+    <v-modal :header-title-text="'Оставьте свой номер, и мы вам перезвоним'" :target="requestModal">
       <template v-slot:body>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Ваше имя</label>
