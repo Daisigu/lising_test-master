@@ -12,14 +12,16 @@
                         {{ currentCar.mark }} {{ currentCar.model }}
                     </h3>
                     <h5>Цена: {{ Number(currentCar.price).toLocaleString('ru-RU') }} | Платеж
-                       <span class="text-warning"> от {{ (Number((Number(currentCar.price) / 12)).toFixed(0)).toLocaleString('ru-RU') }} руб. / Мес</span>
+                        <span class="text-warning"> от {{ (Number((Number(currentCar.price) /
+                                12)).toFixed(0)).toLocaleString('ru-RU')
+                        }} руб. / Мес</span>
                     </h5>
                     <div class="row">
                         <div class="col-6">
                             <p> <span class="description-title">Двигатель:</span> <br />{{ currentCar.engine }} </p>
                             <p> <span class="description-title">Пробег:</span> <br />{{ currentCar.mileage }} </p>
-                            <p> <span class="description-title">Наличие:</span> <br /> {{currentCar.availability}}
-                             
+                            <p> <span class="description-title">Наличие:</span> <br /> {{ currentCar.availability }}
+
                             </p>
                         </div>
                         <div class="col-6">
@@ -57,8 +59,8 @@
                 </div>
             </template>
             <template v-slot:footer>
-                <button data-bs-close="modal" data-bs-dismiss="modal"
-                    class="btn btn-sm btn-primary me-2">Отправить</button>
+                <button data-bs-close="modal" data-bs-dismiss="modal" class="btn btn-sm btn-primary me-2"
+                    @click="carClientRequest()">Отправить</button>
                 <button class="btn btn-sm btn-danger">Закрыть</button>
             </template>
         </v-modal>
@@ -112,7 +114,23 @@ export default {
                     this.loading = false
                 })
             }
-        }
+        },
+        carClientRequest() {
+            let tg = {
+                token: "5640775860:AAHGUG0ktr91Y6bjj8knbP7nkIdHCX89cNo", 
+                chat_id: "676402625" 
+            }
+            const url = `https://api.telegram.org/bot${tg.token}/sendMessage` // The url to request
+            const obj = {
+                chat_id: tg.chat_id, // Telegram chat id
+                text: '📩 Заявка по машине: \n' + this.currentCar.mark+ ' ' + this.currentCar.model + '\n' +  '👤 Имя: \n' + this.requestName + '\n' + '📞 Номер телефона:\n' + this.requsetPhoneNumber
+            };
+            const xht = new XMLHttpRequest();
+            xht.open("POST", url, true);
+            xht.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+            xht.send(JSON.stringify(obj));
+
+        },
     },
     mounted() {
 
@@ -133,7 +151,8 @@ export default {
     width: 100%;
     height: 100%;
 }
-.description-title{
+
+.description-title {
     font-weight: 900;
 }
 </style>

@@ -92,9 +92,7 @@ export default {
             return Number((this.carPrice / 100 * this.prepaymentProcent).toFixed(0))
         },
         leasingSum() {
-            
-            
-            return Number((this.carPrice * 1.2 * (this.month / 12) - this.prepaymentRub).toFixed(0));
+            return Number((this.carPrice  * (this.month / 11)*1.22 - this.prepaymentRub).toFixed(0));
         },
         expenses() {
             return Number((this.leasingSum * 0.8).toFixed(0))

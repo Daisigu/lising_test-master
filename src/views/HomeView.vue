@@ -41,7 +41,7 @@
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Номер телефона</label>
-          <input v-model="requsetPhoneNumber" type="phone" class="form-control" id="exampleInputPassword1">
+          <input v-model="requestPhoneNumber" type="phone" class="form-control" id="exampleInputPassword1">
         </div>
       </template>
       <template v-slot:footer>
@@ -71,21 +71,24 @@
 
 <script>
 import vModal from '@/components/v-modal.vue';
+import { mapMutations } from 'vuex';
 export default {
   data() {
     return {
       requestModal: 'requestModal',
       requestName: '',
-      requsetPhoneNumber: '',
+      requestPhoneNumber: '',
     }
   },
   components: {
     vModal
   },
   methods: {
+    ...mapMutations([
+      'clientRequest'
+    ]),
     sendClientRequest() {
-      console.log(this.requestName, this.requsetPhoneNumber);
-      alert('Ваша заявка принята')
+     this.clientRequest([this.requestName, this.requestPhoneNumber])
     }
   }
 }

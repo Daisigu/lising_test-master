@@ -24,7 +24,8 @@
                 <div class="card contact-card me-2">
                     <div class="card-body d-flex flex-column justify-content-between">
                         <h5 class="card-title">Закажите обратный звонок</h5>
-                        <a  data-bs-toggle="modal" data-bs-target="#requestModal" class="btn btn-primary align-self-start">Оставить заявку</a>
+                        <a data-bs-toggle="modal" data-bs-target="#requestModal"
+                            class="btn btn-primary align-self-start">Оставить заявку</a>
                     </div>
                 </div>
                 <div class="card contact-card me-2">
@@ -37,7 +38,8 @@
                     <div class="card-body d-flex flex-column justify-content-between">
                         <h5 class="card-title">Напишите нам в мессенджер</h5>
                         <div>
-                            <a target="_blank" href="https://t.me/bogd228" class="btn btn-primary align-self-start me-2">Telegram</a>
+                            <a target="_blank" href="https://t.me/bogd228"
+                                class="btn btn-primary align-self-start me-2">Telegram</a>
                             <a href="#" class="btn btn-success align-self-start">Whats-up</a>
                         </div>
                     </div>
@@ -59,12 +61,12 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Номер телефона</label>
-                    <input v-model="requsetPhoneNumber" type="phone" class="form-control" id="exampleInputPassword1">
+                    <input v-model="requestPhoneNumber" type="phone" class="form-control" id="exampleInputPassword1">
                 </div>
             </template>
             <template v-slot:footer>
                 <button data-bs-close="modal" data-bs-dismiss="modal" class="btn btn-sm btn-primary me-2"
-                   >Отправить</button>
+                    @click="clientRequest([requestName, requestPhoneNumber])">Отправить</button>
                 <button class="btn btn-sm btn-danger">Закрыть</button>
             </template>
         </v-modal>
@@ -81,13 +83,20 @@
 
 <script>
 import vModal from '@/components/v-modal.vue';
+import { mapMutations } from 'vuex';
 export default {
     data() {
         return {
             requestModal: 'requestModal',
             requestName: '',
-            requsetPhoneNumber: '',
+            requestPhoneNumber: '',
         }
+    },
+    methods: {
+        ...mapMutations([
+            'clientRequest'
+        ]),
+
     },
     components: {
         vModal
