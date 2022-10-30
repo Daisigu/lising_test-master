@@ -7,20 +7,29 @@
                 <div class="img-car-wrapper col-5 me-5">
                     <VCarousel></VCarousel>
                 </div>
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column col">
                     <h3>
                         {{ currentCar.mark }} {{ currentCar.model }}
                     </h3>
-                    <h5>Цена: {{ Number(currentCar.price).toLocaleString('ru-RU') }} | Платеж от:
-                        {{ (Number((Number(currentCar.price) / 12)).toFixed(0)).toLocaleString('ru-RU') }} Руб. / Мес
+                    <h5>Цена: {{ Number(currentCar.price).toLocaleString('ru-RU') }} | Платеж
+                       <span class="text-warning"> от {{ (Number((Number(currentCar.price) / 12)).toFixed(0)).toLocaleString('ru-RU') }} руб. / Мес</span>
                     </h5>
-                    <p>Двигатель: {{ currentCar.engine }} л.</p>
-                    <p>Пробег: {{ currentCar.mileage }} км.</p>
-                    <p>Наличие:
-                        <span v-if="currentCar.availability">В наличии</span>
-                        <span v-else>Нет в наличии</span>
-                    </p>
-                    <button class="btn btn-success align-self-start" data-bs-toggle="modal" :data-bs-target="'#'+bookCarModal">Забронировать</button>
+                    <div class="row">
+                        <div class="col-6">
+                            <p> <span class="description-title">Двигатель:</span> <br />{{ currentCar.engine }} </p>
+                            <p> <span class="description-title">Пробег:</span> <br />{{ currentCar.mileage }} </p>
+                            <p> <span class="description-title">Наличие:</span> <br /> {{currentCar.availability}}
+                             
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <p> <span class="description-title">Год выпуска:</span> <br /> {{ currentCar.year }} </p>
+                            <p> <span class="description-title">Цвет:</span> <br />{{ currentCar.color }} </p>
+                            <p> <span class="description-title">Кузов:</span> <br /> {{ currentCar.body }}</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-success align-self-start" data-bs-toggle="modal"
+                        :data-bs-target="'#' + bookCarModal">Забронировать</button>
                 </div>
             </div>
             <VLeasingCalculator class="mt-5" :car="currentCar"></VLeasingCalculator>
@@ -48,8 +57,8 @@
                 </div>
             </template>
             <template v-slot:footer>
-                <button data-bs-close="modal" data-bs-dismiss="modal" class="btn btn-sm btn-primary me-2"
-                  >Отправить</button>
+                <button data-bs-close="modal" data-bs-dismiss="modal"
+                    class="btn btn-sm btn-primary me-2">Отправить</button>
                 <button class="btn btn-sm btn-danger">Закрыть</button>
             </template>
         </v-modal>
@@ -114,7 +123,7 @@ export default {
             this.$router.push('/catalog')
         }
     },
-    components: { VCarousel, VLeasingCalculator, VSpinner, VSideback,vModal },
+    components: { VCarousel, VLeasingCalculator, VSpinner, VSideback, vModal },
 
 }
 </script>
@@ -123,5 +132,8 @@ export default {
 .img-car-wrapper img {
     width: 100%;
     height: 100%;
+}
+.description-title{
+    font-weight: 900;
 }
 </style>

@@ -20,24 +20,24 @@
                         <div class="d-flex flex-row">
                             <div class="me-5">
                                 <div>
-                                    <span class="description-text-left">Год выпуска:</span> <span class="description-text-right"> 2022</span>
+                                    <span class="description-text-left">Год выпуска:</span> <span class="description-text-right"> {{car.year}}</span>
                                 </div>
                                 <div>
                                     <span class="description-text-left">Двигатель:</span> <span class="description-text-right">{{ car.engine }}</span>
                                 </div>
                                 <div>
-                                    <span class="description-text-left">Наличие:</span> <span class="description-text-right">В наличии</span>
+                                    <span class="description-text-left">Наличие:</span> <span class="description-text-right">{{car.availability}}</span>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <span class="description-text-left">Трансмиссия:</span> <span class="description-text-right">МКПП, Передний привод</span>
+                                    <span class="description-text-left">Трансмиссия:</span> <span class="description-text-right">{{car.transmission}}</span>
                                 </div>
                                 <div>
-                                    <span class="description-text-left">Кузов:</span> <span class="description-text-right">Лифтбэк, 5дв.</span>
+                                    <span class="description-text-left">Кузов:</span> <span class="description-text-right">{{car.body}}</span>
                                 </div>
                                 <div>
-                                    <span class="description-text-left">Цвет:</span> <span class="description-text-right">Серый</span>
+                                    <span class="description-text-left">Цвет:</span> <span class="description-text-right">{{car.color}}</span>
                                 </div>
                             </div>
                         </div>

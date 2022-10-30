@@ -24,7 +24,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="engine" class="form-label">Цена</label>
-                                <input autocomplete="off" v-model="price" type="text" class="form-control" id="engine">
+                                <input autocomplete="off" v-model.trim="price" type="number" class="form-control" id="engine">
                             </div>
                             <div class="mb-3">
                                 <label for="engine" class="form-label">Пробег</label>
@@ -34,6 +34,22 @@
                             <div class="mb-3">
                                 <label for="model" class="form-label">Модель</label>
                                 <input autocomplete="off" v-model="model" type="text" class="form-control" id="model">
+                            </div>
+                            <div class="mb-3">
+                                <label for="model" class="form-label">Год выпуска</label>
+                                <input autocomplete="off" v-model="year" type="text" class="form-control" id="model">
+                            </div>
+                            <div class="mb-3">
+                                <label for="model" class="form-label">Трансмиссия</label>
+                                <input autocomplete="off" v-model="transmission" type="text" class="form-control" id="model">
+                            </div>
+                            <div class="mb-3">
+                                <label for="model" class="form-label">Кузов</label>
+                                <input autocomplete="off" v-model="body" type="text" class="form-control" id="model">
+                            </div>
+                            <div class="mb-3">
+                                <label for="model" class="form-label">Цвет</label>
+                                <input autocomplete="off" v-model="color" type="text" class="form-control" id="model">
                             </div>
                             <div class="form-check form-switch mb-3">
                                 <input class="form-check-input" v-model="availability" type="checkbox" id="flexSwitchCheckDefault">
@@ -55,7 +71,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                         <button type="button" class="btn btn-primary" @click="addCar()">Отправить</button>
-                        <button @click="test()">Test</button>
                     </div>
                 </div>
             </div>
@@ -75,18 +90,33 @@ export default {
             mileage: '',
             availability: false,
             model: '',
+            year: '',
+            transmission: '',
+            body: '',
+            color: '',
         }
     },
     methods: {
 
         addCar() {
             const formData = new FormData();
+            if(this.availability){
+                this.availability='В наличии'
+            }
+            else{
+                this.availability="Нет в наличии"
+            }
             formData.append('mark', this.mark)
             formData.append('engine', this.engine)
             formData.append('price', this.price)
             formData.append('mileage', this.mileage)
             formData.append('availability', this.availability)
             formData.append('model', this.model)
+            formData.append('year', this.year)
+            formData.append('transmission', this.transmission)
+            formData.append('body', this.body)
+            formData.append('color', this.color)
+
 
             formData.append('photo', this.$refs.carPhoto.files[0])
             for (let i = 0; i < this.$refs.carCaruselPhoto.files.length; i++) {
@@ -95,13 +125,10 @@ export default {
             axios({
                 method: 'post',
                 url: 'http://localhost:5000/cars/create',
-                data: formData /* {
-                mark: this.mark,
-                engine: this.engine,
-                model: this.model
-            } */
+                data: formData 
             }).then((res) => {
                 console.log(res);
+                alert
             })
         }
     },
