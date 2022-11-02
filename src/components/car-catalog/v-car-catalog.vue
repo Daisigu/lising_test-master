@@ -1,5 +1,6 @@
 <template>
     <div class="d-flex flex-column">
+        <button @click="getLimitCars(page);">test</button>
             <router-link :to="'/car/' + car._id" class="car-card col-12 d-flex flex-row" v-for="car in cars"
                 :key="car._id">
                 <img :src="'http://localhost:5000/' + car.photo" class="car-img" alt="...">
@@ -49,20 +50,30 @@
 
 <script>
   import { mapMutations, mapState } from 'vuex';
+  import axios from 'axios';
 export default {
+    data(){
+        return {
+            page: 0,
+            cars: [],
+        }
+    },
     computed: {
-        ...mapState([
-            'cars'
-        ])
     },
     methods: {
         ...mapMutations([
             'getCurrentCar',
             'getAllCars'
-        ])
+        ]),
+        getLimitCars(page){
+            axios.post("http://localhost:5000/cars/getLimit?page="+page).then((res) => {
+            this.cars = [...this.cars, ...res.data];
+      })
+      this.page++
+        }
     },
     mounted() {
-        this.getAllCars()
+        this.getLimitCars(this.page)
     }
 }
 </script>

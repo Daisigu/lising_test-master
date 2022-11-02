@@ -25,7 +25,7 @@ export default createStore({
     },
     getAllCars(state) {
       axios.get("http://localhost:5000/cars/getAll").then((res) => {
-        state.cars = res.data;
+        state.cars = [...state.cars, ...res.data];
       })
     },
   
