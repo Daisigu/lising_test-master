@@ -7,9 +7,6 @@
                     <option value="0">
                         Легковые автомобили
                     </option>
-                    <option value="0">
-                        Легковые автомобили
-                    </option>
                 </select>
             </div>
 
@@ -19,26 +16,18 @@
             </div>
             <div class="mb-2">
                 <label for="">Марка</label>
-                <select name="" id="" class="form-select" v-model="carMark">
-                    <option value="0">
-                        Легковые автомобили
+                <select name="" id="" class="form-select" v-model="carMark" @change="test = filter">
+                    <option :value="filter" v-for="filter, index in filters">
+                        {{ filter.mark }}
                     </option>
-                    <option value="0">
-                        Легковые автомобили
-                    </option>
-
                 </select>
             </div>
             <div class="mb-2">
                 <label for="">Модель</label>
                 <select name="" id="" class="form-select" v-model="carModel">
-                    <option value="0">
-                        Легковые автомобили
+                    <option value="0" v-for="model in carMark.models">
+                        {{ model }}
                     </option>
-                    <option value="0">
-                        Легковые автомобили
-                    </option>
-
                 </select>
             </div>
             <div class="mb-2">
@@ -47,10 +36,6 @@
                     <option value="0">
                         Легковые автомобили
                     </option>
-                    <option value="0">
-                        Легковые автомобили
-                    </option>
-
                 </select>
             </div>
             <div class="d-flex flex-column">
@@ -62,6 +47,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -70,31 +57,44 @@ export default {
             carMark: '',
             carModel: '',
             carComplictation: '',
+            filters: [],
         }
     },
     methods: {
-        postFilter(){
+        setFilters() {
+            axios.get('http://localhost:5000/cars/filters').then((res) => {
+                this.filters = res.data
+            })
+        },
+
+        postFilter() {
             console.log(
-            this.carType,
-            this.carAviabillity,
-            this.carMark,
-            this.carModel,
-            this.carComplictation
+                this.carType,
+                this.carAviabillity,
+                this.carMark,
+                this.carModel,
+                this.carComplictation
             );
         },
-        clearFilters(){
-            this.carType= ''
-            this.carAviabillity= ''
-            this.carMark= ''
-            this.carModel= ''
-            this.carComplictation= ''
+        clearFilters() {
+            this.carType = ''
+            this.carAviabillity = ''
+            this.carMark = ''
+            this.carModel = ''
+            this.carComplictation = ''
         }
+    },
+    computed: {
+
+    },
+    mounted() {
+        this.setFilters()
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.clearFilters{
+.clearFilters {
     cursor: pointer;
 }
 </style>
