@@ -45,6 +45,7 @@
 
                 </div>
             </router-link>
+            <div style="width: 100%; background-color:green; height: 50px;" ref="observer" ></div>
         </div>
 </template>
 
