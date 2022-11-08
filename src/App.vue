@@ -2,15 +2,13 @@
   <v-navbar></v-navbar>
   
   <router-view></router-view>
-  <v-footer></v-footer>
 </template>
 
 <script>
 import { mapMutations } from 'vuex';
-import vFooter from './components/v-footer.vue';
 import VNavbar from './components/v-navbar.vue';
 export default {
-  components: { VNavbar, vFooter },
+  components: { VNavbar,  },
   methods: {
     ...mapMutations([
       'setAuthTrue'

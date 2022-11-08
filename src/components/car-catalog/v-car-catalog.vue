@@ -100,6 +100,7 @@ export default {
             }
             const callback = (entries, observer) => {
                 if (entries[0].isIntersecting) {
+                    console.log(123);
                     this.getLimitCars(this.page)
                 }
             };
