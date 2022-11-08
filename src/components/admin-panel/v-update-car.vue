@@ -80,10 +80,10 @@
                 </form>
             </template>
             <template v-slot:footer>
-                <button class="btn btn-sm btn-warning" @click="deleteCar()">Удалить</button>
-                <button data-bs-close="modal" data-bs-dismiss="modal" class="btn btn-sm btn-primary me-2"
+                <button class="btn btn-warning" @click="deleteCar()" data-bs-dismiss="modal">Удалить</button>
+                <button data-bs-close="modal" data-bs-dismiss="modal" class="btn btn-primary me-2"
                     @click="postUpdateCar()">Сохранить</button>
-                <button class="btn btn-sm btn-danger">Закрыть</button>
+                <button class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
             </template>
         </v-modal>
 
@@ -120,7 +120,7 @@ export default {
         ]),
         deleteCar() {
             axios.post('http://localhost:5000/cars/delete/' + this.updateCar._id).then((res) => {
-                console.log(res);
+               this.getAllCars()
             })
         },
         postUpdateCar() {
@@ -152,8 +152,8 @@ export default {
                 method: 'post',
                 url: 'http://localhost:5000/cars/update',
                 data: formData
-            }).then((res) => {
-                console.log(res);
+            }).then(() => {
+                this.getAllCars()
             })
         }
     },
@@ -164,5 +164,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.addcar-form{
+    height: 500px;
+    overflow: auto;
+}
+.addcar-form> div {
+    margin-right: 10px;
+}
 </style>

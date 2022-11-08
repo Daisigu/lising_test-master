@@ -81,7 +81,7 @@
 <script>
 import { mapMutations, mapState } from 'vuex';
 import VCarousel from '@/components/v-carousel.vue';
-import VSpinner from '@/components/v-spinner.vue'
+import VSpinner from '@/components/UI-elements/v-spinner-full.vue'
 import VLeasingCalculator from '@/components/v-leasing-calculator.vue';
 import axios from 'axios';
 import VSideback from '@/components/v-sideback.vue';

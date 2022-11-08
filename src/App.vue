@@ -2,14 +2,15 @@
   <v-navbar></v-navbar>
   
   <router-view></router-view>
+  <v-footer></v-footer>
 </template>
 
 <script>
 import { mapMutations } from 'vuex';
+import vFooter from './components/v-footer.vue';
 import VNavbar from './components/v-navbar.vue';
-import Do from './components/v-carousel.vue';
 export default {
-  components: { VNavbar, Do },
+  components: { VNavbar, vFooter },
   methods: {
     ...mapMutations([
       'setAuthTrue'
@@ -28,6 +29,7 @@ export default {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Noto Sans Display', sans-serif !important;
 
 }
 

@@ -24,7 +24,7 @@
             </div>
             <div class="mb-2">
                 <label for="">Модель</label>
-                <select name="" id="" class="form-select" v-model="carModel">
+                <select :disabled="!carMark.mark" name="" id="" class="form-select" v-model="carModel">
                     <option value="0" v-for="model in carMark.models">
                         {{ model }}
                     </option>

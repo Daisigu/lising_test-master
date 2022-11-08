@@ -28,7 +28,8 @@
         </div>
       </div>
     </div>
-
+    <div>
+    </div>
 
 
 
@@ -45,9 +46,9 @@
         </div>
       </template>
       <template v-slot:footer>
-        <button data-bs-close="modal" data-bs-dismiss="modal" class="btn btn-sm btn-primary me-2"
+        <button data-bs-close="modal" data-bs-dismiss="modal" class="btn  btn-primary me-2"
           @click=sendClientRequest()>Отправить</button>
-        <button class="btn btn-sm btn-danger">Закрыть</button>
+        <button class="btn  btn-danger">Закрыть</button>
       </template>
     </v-modal>
 

@@ -69,7 +69,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        <button type="button" class="btn btn-primary" @click="addCar()">Отправить</button>
+                        <button type="button" class="btn btn-primary" @click="addCar()" data-bs-dismiss="modal">Отправить</button>
                     </div>
                 </div>
             </div>
@@ -79,6 +79,7 @@
 
 <script>
   import axios from 'axios';
+import { mapMutations } from 'vuex';
 
 export default {
     data() {
@@ -96,7 +97,9 @@ export default {
         }
     },
     methods: {
-
+        ...mapMutations([
+            'getAllCars'
+        ]),
         addCar() {
             const formData = new FormData();
             if(this.availability){
@@ -127,7 +130,7 @@ export default {
                 data: formData 
             }).then((res) => {
                 console.log(res);
-                alert
+                this.getAllCars()
             })
         }
     },
@@ -135,5 +138,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.addcar-form{
+    height: 500px;
+    overflow: auto;
+}
+.addcar-form> div {
+    margin-right: 10px;
+}
 </style>

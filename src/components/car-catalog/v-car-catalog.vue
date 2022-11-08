@@ -44,14 +44,15 @@
 
             </div>
         </router-link>
-        <div ref="observer"  ></div>
+        <div ref="observer"></div>
+        <v-spinner v-if="carsLoading" class="align-self-center mt-2 mb-2"></v-spinner>
     </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex';
 
-
+import vSpinner from '../UI-elements/v-spinner.vue';
 
 
 import axios from 'axios';
@@ -60,46 +61,51 @@ export default {
         return {
             page: 0,
             cars: [],
+            carsLoading: false,
+            limit: false,
+
         }
     },
     components: {
+        vSpinner
     },
     computed: {
     },
     methods: {
-        
+
         ...mapMutations([
             'getCurrentCar',
             'getAllCars'
         ]),
         getLimitCars(page) {
-            axios.post("http://localhost:5000/cars/getLimit?page=" + page).then((res) => {
-                this.cars = [...this.cars, ...res.data];
-            })
-            this.page++
+            if (!this.limit && !this.carsLoading) {
+                this.carsLoading = true
+                axios.post("http://localhost:5000/cars/getLimit?page=" + page).then((res) => {
+                    this.cars = [...this.cars, ...res.data];
+                    if (res.data.length < 7) {
+                        this.limit = true
+                    }
+                }).then(() => {
+                    this.page++
+                    this.carsLoading = false
+                })
+            }
         }
     },
     mounted() {
-        this.getLimitCars(this.page)
-        
-
-
-
-        const options = {
-            rootMargin: '0px',
-            threshold: 1.0
-        }
-        const callback = (entries, observer)=>{
-           if (entries[0].isIntersecting){
-            this.getLimitCars(this.page)
-           }
-        };
-        const observer = new IntersectionObserver(callback, options)
-        observer.observe(this.$refs.observer);
-
-
-
-
+        setTimeout(() => {
+            const options = {
+                rootMargin: '10px',
+                threshold: 1.0
+            }
+            const callback = (entries, observer) => {
+                if (entries[0].isIntersecting) {
+                    this.getLimitCars(this.page)
+                }
+            };
+            const observer = new IntersectionObserver(callback, options)
+            observer.observe(this.$refs.observer);
+        }, 1)
     }
 }
 </script>
