@@ -1,6 +1,10 @@
 <template>
   <v-navbar></v-navbar>
-  <router-view :key="$route.fullPath"></router-view>
+  <router-view v-slot="{ Component }">
+  <keep-alive>
+    <component :is="Component" />
+  </keep-alive>
+</router-view>
 </template>
 
 <script>
