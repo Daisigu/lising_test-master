@@ -83,7 +83,7 @@
 
 <script>
 import vModal from '@/components/v-modal.vue';
-import { mapMutations } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 export default {
     data() {
         return {
@@ -93,9 +93,9 @@ export default {
         }
     },
     methods: {
-        ...mapMutations([
-            'clientRequest'
-        ]),
+        ...mapActions([
+        'clientRequest'
+        ])
 
     },
     components: {

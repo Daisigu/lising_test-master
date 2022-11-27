@@ -1,6 +1,7 @@
 <template>
     <div class="container mt-5">
         <h1>Админка</h1>
+        
         <v-add-car></v-add-car>
         <v-update-car class="mt-5"></v-update-car>
     </div>

@@ -5,17 +5,17 @@ export default createStore({
     isAuth: false,
     cars: [],
     currentCar: {},
+    limit: null,
     isAuth: false,
   },
-  getters: {
-   
-  },
-  methods: {
-    
-  },
+  getters: {},
+  methods: {},
   mutations: {
     setCurrentCar(state, value) {
       state.currentCar = value;
+    },
+    setLimit(state,value){
+      state.limit=value
     },
     setAuthTrue(state) {
       state.isAuth = true;
@@ -23,12 +23,30 @@ export default createStore({
     setAuthFalse(state) {
       state.isAuth = false;
     },
-    getAllCars(state) {
-      axios.get("http://localhost:5000/cars/getAll").then((res) => {
-        state.cars = res.data
-      })
+    setCars(state, cars) {
+      state.cars = cars;
     },
-  
+  },
+  actions: {
+    setCurrentCar({ commit, value }) {
+      commit("setCurrentCar", value);
+    },
+    setAuthTrue({ commit }) {
+      commit("setAuthTrue");
+    },
+    setAuthFalse({ commit }) {
+      commit("setAuthFalse");
+    },
+    async getAllCars({ commit }) {
+      const res = await axios.get("http://localhost:5000/cars/getAll");
+      commit("setCars", res.data);
+    },
+    clientRequest({ commit, clientName, phoneNumber }) {
+      commit("clientRequest", clientName, phoneNumber);
+    },
+    setFiltersValues({ commit }) {
+      commit("setFiltersValues");
+    },
     clientRequest(state, clientData) {
       const [clientName, phoneNumber] = clientData;
       let tg = {
@@ -45,26 +63,6 @@ export default createStore({
       xht.setRequestHeader("Content-type", "application/json; charset=UTF-8");
       xht.send(JSON.stringify(obj));
     },
-  },
-  actions: {
-    setCurrentCar({ commit, value }) {
-      commit("setCurrentCar", value);
-    },
-    setAuthTrue({ commit }) {
-      commit("setAuthTrue");
-    },
-    setAuthFalse({ commit }) {
-      commit("setAuthFalse");
-    },
-    getAllCars({ commit }) {
-      commit("getAllCars");
-    },
-    clientRequest({ commit, clientName, phoneNumber }) {
-      commit("clientRequest", clientName, phoneNumber);
-    },
-    setFiltersValues({commit}){
-      commit('setFiltersValues')
-    }
   },
   modules: {},
 });

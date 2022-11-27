@@ -23,7 +23,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="engine" class="form-label">Цена</label>
-                                <input autocomplete="off" v-model.trim="price" type="number" class="form-control" id="engine">
+                                <input autocomplete="off" v-model.trim="price" type="number" class="form-control"
+                                    id="engine">
                             </div>
                             <div class="mb-3">
                                 <label for="engine" class="form-label">Пробег</label>
@@ -40,7 +41,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="model" class="form-label">Трансмиссия</label>
-                                <input autocomplete="off" v-model="transmission" type="text" class="form-control" id="model">
+                                <input autocomplete="off" v-model="transmission" type="text" class="form-control"
+                                    id="model">
                             </div>
                             <div class="mb-3">
                                 <label for="model" class="form-label">Кузов</label>
@@ -51,7 +53,8 @@
                                 <input autocomplete="off" v-model="color" type="text" class="form-control" id="model">
                             </div>
                             <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" v-model="availability" type="checkbox" id="flexSwitchCheckDefault">
+                                <input class="form-check-input" v-model="availability" type="checkbox"
+                                    id="flexSwitchCheckDefault">
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Наличие</label>
                             </div>
                             <div class="mb-3">
@@ -69,7 +72,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        <button type="button" class="btn btn-primary" @click="addCar()" data-bs-dismiss="modal">Отправить</button>
+                        <button type="button" class="btn btn-primary" @click="addCar()"
+                            data-bs-dismiss="modal">Отправить</button>
                     </div>
                 </div>
             </div>
@@ -78,7 +82,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+import axios from 'axios';
 import { mapMutations } from 'vuex';
 
 export default {
@@ -98,13 +102,13 @@ export default {
     },
     methods: {
 
-       async addCar() {
+        async addCar() {
             const formData = new FormData();
-            if(this.availability){
-                this.availability='В наличии'
+            if (this.availability) {
+                this.availability = 'В наличии'
             }
-            else{
-                this.availability="Нет в наличии"
+            else {
+                this.availability = "Нет в наличии"
             }
             formData.append('mark', this.mark)
             formData.append('engine', this.engine)
@@ -122,15 +126,12 @@ export default {
             for (let i = 0; i < this.$refs.carCaruselPhoto.files.length; i++) {
                 formData.append("carouselPhotos", this.$refs.carCaruselPhoto.files[i]);
             }
-           const res = await axios({
+            const res = await axios({
                 method: 'post',
                 url: 'http://localhost:5000/cars/create',
-                data: formData 
-            }).then((res) => {
-                console.log(res);
-                alert
+                data: formData
             })
-           console.log(res);
+            console.log(res);
         }
     },
 }

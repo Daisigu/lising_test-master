@@ -1,14 +1,13 @@
 <template>
   <v-navbar></v-navbar>
-  
-  <router-view></router-view>
+  <router-view :key="$route.fullPath"></router-view>
 </template>
 
 <script>
 import { mapMutations } from 'vuex';
 import VNavbar from './components/v-navbar.vue';
 export default {
-  components: { VNavbar,  },
+  components: { VNavbar, },
   methods: {
     ...mapMutations([
       'setAuthTrue'

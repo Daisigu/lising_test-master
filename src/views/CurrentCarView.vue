@@ -59,9 +59,9 @@
                 </div>
             </template>
             <template v-slot:footer>
-                <button data-bs-close="modal" data-bs-dismiss="modal" class="btn btn-sm btn-primary me-2"
+                <button data-bs-close="modal" data-bs-dismiss="modal" class="btn  btn-primary me-2"
                     @click="carClientRequest()">Отправить</button>
-                <button class="btn btn-sm btn-danger">Закрыть</button>
+                <button class="btn  btn-danger">Закрыть</button>
             </template>
         </v-modal>
 
@@ -132,7 +132,6 @@ export default {
         },
     },
     mounted() {
-
         this.getCurrentCar(this.$route.params.id)
         if (this.currentCar) {
         }

@@ -7,6 +7,9 @@
                     <option value="0">
                         Легковые автомобили
                     </option>
+                    <option value="1">
+                        Грузовой автомобиль
+                    </option>
                 </select>
             </div>
 
@@ -25,20 +28,12 @@
             <div class="mb-2">
                 <label for="">Модель</label>
                 <select :disabled="!carMark.mark" name="" id="" class="form-select" v-model="carModel">
-                    <option value="0" v-for="model in carMark.models">
+                    <option :value="model" v-for="model in carMark.models">
                         {{ model }}
                     </option>
                 </select>
             </div>
-            <div class="mb-2">
-                <label for="">Комплектация</label>
-                <select name="" id="" class="form-select" v-model="carComplictation">
-                    <option value="0">
-                        Легковые автомобили
-                    </option>
-                </select>
-            </div>
-            <div class="d-flex flex-column">
+            <div class="d-flex flex-column mt-4">
                 <button type="button" class="btn btn-primary mb-2" @click="postFilter()">Показать</button>
                 <p class="text-center clearFilters" @click="clearFilters()">Очистить все</p>
             </div>
@@ -67,25 +62,25 @@ export default {
             })
         },
 
-        postFilter() {
-            console.log(
-                this.carType,
-                this.carAviabillity,
-                this.carMark,
-                this.carModel,
-                this.carComplictation
-            );
+      async postFilter() {
+          const res = await  axios({
+                method: 'post',
+                url: 'http://localhost:5000/cars/filterCars',
+                data: {
+                    carType: this.carType,
+                    carAviabillity: this.carAviabillity,
+                    carMark: this.carMark,
+                    carModel: this.carModel
+                }
+            })
+            console.log(res);
         },
         clearFilters() {
             this.carType = ''
             this.carAviabillity = ''
             this.carMark = ''
             this.carModel = ''
-            this.carComplictation = ''
         }
-    },
-    computed: {
-
     },
     mounted() {
         this.setFilters()
@@ -93,7 +88,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .clearFilters {
     cursor: pointer;
 }

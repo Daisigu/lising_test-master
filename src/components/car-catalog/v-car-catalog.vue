@@ -60,53 +60,55 @@ export default {
     data() {
         return {
             page: 0,
-            cars: [],
             carsLoading: false,
-            limit: false,
-
+            limit: 10,
+            pageLimit: 0,
         }
     },
     components: {
         vSpinner
     },
     computed: {
+        ...mapState([
+            'cars'
+        ])
     },
     methods: {
 
         ...mapMutations([
             'getCurrentCar',
-            'getAllCars'
+            'setCars'
         ]),
-        getLimitCars(page) {
-            if (!this.limit && !this.carsLoading) {
+        async getLimitCars() {
+            if (this.page <= this.pageLimit) {
                 this.carsLoading = true
-                axios.post("http://localhost:5000/cars/getLimit?page=" + page).then((res) => {
-                    this.cars = [...this.cars, ...res.data];
-                    if (res.data.length < 7) {
-                        this.limit = true
+                const res = await axios({
+                    method: 'post',
+                    url: 'http://localhost:5000/cars/getLimit',
+                    data: {
+                        page: this.page,
+                        limit: this.limit,
                     }
-                }).then(() => {
-                    this.page++
-                    this.carsLoading = false
                 })
+                this.setCars([...this.cars, ...res.data.cars])
+                this.carsLoading = false
+                this.page++
+                this.pageLimit = Math.ceil(res.data.limit / this.limit)
             }
         }
     },
     mounted() {
-        setTimeout(() => {
-            const options = {
-                rootMargin: '10px',
-                threshold: 1.0
+        const options = {
+            rootMargin: '10px',
+            threshold: 1.0
+        }
+        const callback = (entries, observer) => {
+            if (entries[0].isIntersecting) {
+                this.getLimitCars()
             }
-            const callback = (entries, observer) => {
-                if (entries[0].isIntersecting) {
-                    console.log(123);
-                    this.getLimitCars(this.page)
-                }
-            };
-            const observer = new IntersectionObserver(callback, options)
-            observer.observe(this.$refs.observer);
-        }, 1)
+        };
+        const observer = new IntersectionObserver(callback, options)
+        observer.observe(this.$refs.observer);
     }
 }
 </script>

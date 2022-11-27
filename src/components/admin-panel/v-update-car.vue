@@ -93,7 +93,7 @@
 
 <script>
 import VModal from '../v-modal.vue';
-import { mapMutations, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import axios from 'axios';
 export default {
     components: {
@@ -111,7 +111,7 @@ export default {
         ])
     },
     methods: {
-        ...mapMutations([
+        ...mapActions([
             'getAllCars'
         ]),
         deleteCar() {
