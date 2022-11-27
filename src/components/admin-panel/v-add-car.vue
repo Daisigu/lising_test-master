@@ -97,7 +97,7 @@ export default {
     },
     methods: {
 
-        addCar() {
+       async addCar() {
             const formData = new FormData();
             if(this.availability){
                 this.availability='В наличии'
@@ -121,19 +121,13 @@ export default {
             for (let i = 0; i < this.$refs.carCaruselPhoto.files.length; i++) {
                 formData.append("carouselPhotos", this.$refs.carCaruselPhoto.files[i]);
             }
-            axios({
+           const res = await axios({
                 method: 'post',
                 url: 'http://localhost:5000/cars/create',
                 data: formData 
-            }).then((res) => {
-                console.log(res);
-                alert
             })
+           console.log(res);
         }
     },
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

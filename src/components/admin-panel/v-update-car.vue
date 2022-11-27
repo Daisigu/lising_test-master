@@ -12,10 +12,6 @@
         </div>
 
 
-
-
-
-
         <!-- Request Modal -->
         <v-modal :header-title-text="'Изменить данные машины'" :target="modalId">
             <template v-slot:body>
