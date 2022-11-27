@@ -7,7 +7,12 @@ export default createStore({
     currentCar: {},
     isAuth: false,
   },
-  getters: {},
+  getters: {
+   
+  },
+  methods: {
+    
+  },
   mutations: {
     setCurrentCar(state, value) {
       state.currentCar = value;
@@ -20,9 +25,10 @@ export default createStore({
     },
     getAllCars(state) {
       axios.get("http://localhost:5000/cars/getAll").then((res) => {
-        state.cars = res.data;
-      });
+        state.cars = res.data
+      })
     },
+  
     clientRequest(state, clientData) {
       const [clientName, phoneNumber] = clientData;
       let tg = {
@@ -56,6 +62,9 @@ export default createStore({
     clientRequest({ commit, clientName, phoneNumber }) {
       commit("clientRequest", clientName, phoneNumber);
     },
+    setFiltersValues({commit}){
+      commit('setFiltersValues')
+    }
   },
   modules: {},
 });

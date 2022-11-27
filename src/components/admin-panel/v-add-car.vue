@@ -69,7 +69,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        <button type="button" class="btn btn-primary" @click="addCar()">Отправить</button>
+                        <button type="button" class="btn btn-primary" @click="addCar()" data-bs-dismiss="modal">Отправить</button>
                     </div>
                 </div>
             </div>
@@ -79,6 +79,7 @@
 
 <script>
   import axios from 'axios';
+import { mapMutations } from 'vuex';
 
 export default {
     data() {
@@ -125,9 +126,16 @@ export default {
                 method: 'post',
                 url: 'http://localhost:5000/cars/create',
                 data: formData 
+            }).then((res) => {
+                console.log(res);
+                alert
             })
            console.log(res);
         }
     },
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

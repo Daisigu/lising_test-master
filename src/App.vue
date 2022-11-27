@@ -7,9 +7,8 @@
 <script>
 import { mapMutations } from 'vuex';
 import VNavbar from './components/v-navbar.vue';
-import Do from './components/v-carousel.vue';
 export default {
-  components: { VNavbar, Do },
+  components: { VNavbar,  },
   methods: {
     ...mapMutations([
       'setAuthTrue'
@@ -28,6 +27,7 @@ export default {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Noto Sans Display', sans-serif !important;
 
 }
 

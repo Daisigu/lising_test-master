@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-5">
+    <div id="container" class="mt-5">
         <h1>Каталог автомобилей</h1>
         <div class="d-flex flex-column">
             <router-link :to="'/car/' + car._id" class="car-card col-12 d-flex flex-row" v-for="car in cars"
@@ -47,67 +47,28 @@
                 </div>
             </router-link>
         </div>
+      <div class="row">
+        <v-car-catalog class="col-10"></v-car-catalog>
+        <v-catalog-filter class="col-2"></v-catalog-filter>
+      </div>
     </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import vCarCatalog from '@/components/car-catalog/v-car-catalog.vue';
+import vCatalogFilter from '@/components/car-catalog/v-catalog-filter.vue';
 export default {
-    computed: {
-        ...mapState([
-            'cars'
-        ])
-    },
-    methods: {
-        ...mapMutations([
-            'getCurrentCar',
-            'getAllCars'
-        ])
-    },
-    mounted() {
-        this.getAllCars()
+    components: {
+        vCarCatalog, vCatalogFilter
     }
 }
 </script>
 
 <style scoped>
-.car-card {
-    height: 150px;
-    padding: 5px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    margin-bottom: 5px;
-    border-bottom: 1px solid rgb(204, 204, 204);
-}
-
-.car-card:hover .car-title {
-    color: coral;
-
-}
-
-.car-card:hover {
-    opacity: 0.8;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.car-img {
-    border-radius: 5px;
-    margin-right: 5px;
-    width: 200px;
-}
-
-.price {
-    padding: 5px;
-    background: rgb(236, 236, 236);
-}
-
-.description-text-right {
-    color: black;
-    font-weight: 500;
-}
-
-.description-text-left {
-    color: gray;
+#container {
+    position: relative;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>

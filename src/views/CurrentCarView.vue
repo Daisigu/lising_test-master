@@ -1,8 +1,8 @@
 <template>
     <div>
         <v-sideback></v-sideback>
-        <VSpinner v-if="loading"></VSpinner>
-        <div class="container mt-5" v-if="!loading">
+        <VSpinner :w="18" :h="18" v-if="currentCarLoading"></VSpinner>
+        <div class="container mt-5" v-if="!currentCarLoading">
             <div class="full-size-car-card d-flex">
                 <div class="img-car-wrapper col-5 me-5">
                     <VCarousel></VCarousel>
@@ -81,7 +81,7 @@
 <script>
 import { mapMutations, mapState } from 'vuex';
 import VCarousel from '@/components/v-carousel.vue';
-import VSpinner from '@/components/v-spinner.vue'
+import VSpinner from '@/components/UI-elements/v-spinner-full.vue'
 import VLeasingCalculator from '@/components/v-leasing-calculator.vue';
 import axios from 'axios';
 import VSideback from '@/components/v-sideback.vue';
@@ -90,7 +90,7 @@ import vModal from '@/components/v-modal.vue';
 export default {
     data() {
         return {
-            loading: false,
+            currentCarLoading: false,
             requestName: '',
             requsetPhoneNumber: '',
             bookCarModal: 'bookCarModal'
@@ -102,28 +102,27 @@ export default {
         ])
     },
     methods: {
-
         ...mapMutations([
             'setCurrentCar'
         ]),
         getCurrentCar(_id) {
-            if (!(this.loading)) {
-                this.loading = true
+            if (!(this.currentCarLoading)) {
+                this.currentCarLoading = true
                 axios.get('http://localhost:5000/cars/car/' + _id).then((res) => {
                     this.setCurrentCar(res.data)
-                    this.loading = false
+                    this.currentCarLoading = false
                 })
             }
         },
         carClientRequest() {
             let tg = {
-                token: "5640775860:AAHGUG0ktr91Y6bjj8knbP7nkIdHCX89cNo", 
-                chat_id: "676402625" 
+                token: "5640775860:AAHGUG0ktr91Y6bjj8knbP7nkIdHCX89cNo",
+                chat_id: "676402625"
             }
             const url = `https://api.telegram.org/bot${tg.token}/sendMessage` // The url to request
             const obj = {
                 chat_id: tg.chat_id, // Telegram chat id
-                text: '📩 Заявка по машине: \n' + this.currentCar.mark+ ' ' + this.currentCar.model + '\n' +  '👤 Имя: \n' + this.requestName + '\n' + '📞 Номер телефона:\n' + this.requsetPhoneNumber
+                text: '📩 Заявка по машине: \n' + this.currentCar.mark + ' ' + this.currentCar.model + '\n' + '👤 Имя: \n' + this.requestName + '\n' + '📞 Номер телефона:\n' + this.requsetPhoneNumber
             };
             const xht = new XMLHttpRequest();
             xht.open("POST", url, true);

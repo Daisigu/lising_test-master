@@ -1,5 +1,5 @@
-<template>
-    <div class="container mt-5">
+<template >
+    <div class="container mt-5" >
         <div class="d-flex flex-column">
             <h1>Контакты "КРК Лизинг"</h1>
             <h5>
@@ -112,5 +112,6 @@ export default {
 
 .card-body {
     min-height: 170px;
-}
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+        }
 </style>
