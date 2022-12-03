@@ -114,19 +114,13 @@ export default {
         ...mapActions([
             'getAllCars'
         ]),
-        deleteCar() {
-            axios.post('http://localhost:5000/cars/delete/' + this.updateCar._id).then((res) => {
-               this.getAllCars()
-            })
+        async deleteCar() {
+            const res = await axios.post('http://localhost:5000/cars/delete/' + this.updateCar._id)
+            this.getAllCars()
         },
-        postUpdateCar() {
+        async postUpdateCar() {
             const formData = new FormData();
-            if (this.updateCar.availability) {
-                this.updateCar.availability = 'В наличии'
-            }
-            else {
-                this.updateCar.availability = "Нет в наличии"
-            }
+            this.updateCar.availability ? this.updateCar.availability = 'В наличии' : this.updateCar.availability = "Нет в наличии"
             formData.append('_id', this.updateCar._id)
             formData.append('mark', this.updateCar.mark)
             formData.append('engine', this.updateCar.engine)
@@ -138,19 +132,17 @@ export default {
             formData.append('transmission', this.updateCar.transmission)
             formData.append('body', this.updateCar.body)
             formData.append('color', this.updateCar.color)
-
-
             formData.append('photo', this.$refs.updateCarPhoto.files[0])
+
             for (let i = 0; i < this.$refs.updateCarCaruselPhoto.files.length; i++) {
                 formData.append("carouselPhotos", this.$refs.updateCarCaruselPhoto.files[i]);
             }
-            axios({
+            const res = await axios({
                 method: 'post',
                 url: 'http://localhost:5000/cars/update',
                 data: formData
-            }).then(() => {
-                this.getAllCars()
             })
+            this.getAllCars()
         }
     },
     mounted() {
@@ -159,12 +151,13 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.addcar-form{
+<style  scoped>
+.addcar-form {
     height: 500px;
     overflow: auto;
 }
-.addcar-form> div {
-    margin-right: 10px;
+
+.addcar-form>div {
+    margin-inline: 10px;
 }
 </style>
